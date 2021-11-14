@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.sql.*;
+
 
 public class Try
 {
@@ -20,6 +22,7 @@ public class Try
         }
         int count1 = 0;
         int count2 = 0;
+        int accountcounts=0;
         int option=0;
         System.out.println("Welcome to Bank Management System!");
         System.out.println("Enter 1 to create an account!");
@@ -51,7 +54,34 @@ public class Try
         			System.out.println("Enter initial deposit amount");
         			int e=s1.nextInt();
         			saveArr[count1].insert(a, b, c, d, e);
+        			try {
+        				Class.forName("oracle.jdbc.driver.OracleDriver");
+        				System.out.println("Driver load successfully");
+        				Connection con=DriverManager.getConnection("jdbc:oracle:thin:@DESKTOP-EC2RIA7:1521:xe","hello","1234");
+        				System.out.println("Connection Established!");
+            			String sql="insert into accounts(account_id,name,address,phonenumber,account_type,accountnumber,balance) values (?,?,?,?,?,?,?)";
+            			PreparedStatement statement=con.prepareStatement(sql);
+            			statement.setInt(1,accountcounts);
+            			statement.setString(2,a);
+            			statement.setString(3,b);
+            			statement.setString(4,c);
+            			statement.setString(5,"savings");
+            			statement.setInt(6,d);
+            			statement.setInt(7,e);
+            			int rowInserted=statement.executeUpdate();
+            			if(rowInserted>0)
+            			{
+            				System.out.println("Added account successfully :)");
+            			}
+        			}
+        			catch(ClassNotFoundException e1){
+        				System.out.println("Driver not loaded!");
+        			}
+        			catch(SQLException e2) {
+        				System.out.println("Connection not established!");
+        			}
         			count1++;
+        			accountcounts++;
         		}
         		else if(temp==2)
         		{
@@ -67,7 +97,34 @@ public class Try
         			System.out.println("Enter initial deposit amount");
         			int e=s1.nextInt();
         			checkArr[count2].insert(a, b, c, d, e);
+        			try {
+        				Class.forName("oracle.jdbc.driver.OracleDriver");
+        				System.out.println("Driver load successfully");
+        				Connection con=DriverManager.getConnection("jdbc:oracle:thin:@DESKTOP-EC2RIA7:1521:xe","hello","1234");
+        				System.out.println("Connection Established!");
+            			String sql="insert into accounts(account_id,name,address,phonenumber,account_type,accountnumber,balance) values (?,?,?,?,?,?,?)";
+            			PreparedStatement statement=con.prepareStatement(sql);
+            			statement.setInt(1,accountcounts);
+            			statement.setString(2,a);
+            			statement.setString(3,b);
+            			statement.setString(4,c);
+            			statement.setString(5,"checking");
+            			statement.setInt(6,d);
+            			statement.setInt(7,e);
+            			int rowInserted=statement.executeUpdate();
+            			if(rowInserted>0)
+            			{
+            				System.out.println("Added account successfully :)");
+            			}
+        			}
+        			catch(ClassNotFoundException e1){
+        				System.out.println("Driver not loaded!");
+        			}
+        			catch(SQLException e2) {
+        				System.out.println("Connection not established!");
+        			}
         			count2++;
+        			accountcounts++;
         		}
         		else
         		{
